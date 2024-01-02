@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('clients.home');
+Route::group(['prefix'=> 'shoes-store'], function (){
+      Route::get('/home',function(){
+          return view('clients.home');
+      })->name('home');
+});
+
+Route::group(['prefix'=> 'admins'], function (){
+    Route::get('/dashboard',function(){
+        return view('admins.layouts.master');
+    })->name('dashboard');
 });
