@@ -35,7 +35,7 @@
                     <div class="collapse navbar-collapse justify-content-between">
 						<div class="header-left">
 							<div class="dashboard_bar">
-                                Dashboard
+                                {{$title}}
                             </div>
 						</div>
                         <div class="header-right d-flex align-items-center">

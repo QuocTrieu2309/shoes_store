@@ -10,12 +10,13 @@ class Role extends Model
     use HasFactory;
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
-    protected $table = 'role';
     protected $fillable = [
-          'name',
-          'status'
+        'name',
+        'status'
     ];
+
     public static function boot() {
+        parent::boot();
         static::creating(function ($role){
             $role->status = self::STATUS_ACTIVE;
         });
