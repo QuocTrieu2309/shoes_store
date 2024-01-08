@@ -22,7 +22,7 @@
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="name"  placeholder="Enter a rolename.." value={{$data->name}}>                             
+                                        <input type="text" class="form-control" name="name"  placeholder="Enter a rolename.." value="{{$data->name}}">                             
                                             @error('name')
                                             <div class="alert alert-danger mt-3">{{ $message }}</div>
                                         @enderror

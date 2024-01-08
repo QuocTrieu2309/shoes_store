@@ -14,21 +14,22 @@
                             @if(session('error'))
                                 <div class="alert alert-danger">{{ session('error') }}</div>
                             @endif
-                            <form action="{{route('roles.store')}}" method="POST">
+                            <form action="{{route('materials.update',$data->id)}}" method="POST">
                                 @csrf
+                                @method('PUT')
                                 <div class="mb-3 row">
-                                    <label class="col-lg-4 col-form-label" for="validationCustom01">RoleName
+                                    <label class="col-lg-4 col-form-label" for="validationCustom01">MaterialName
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="name"  placeholder="Enter a rolename.." value="{{old('name')}}">                             
+                                        <input type="text" class="form-control" name="name"  placeholder="Enter a Materialname.." value="{{ $data->name}}">                             
                                             @error('name')
                                             <div class="alert alert-danger mt-3">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="submit">Create</button>
-                                <a href="{{route('roles.index')}}" class="btn btn-info">List</a>
+                                <button class="btn btn-primary" type="submit">Update</button>
+                                <a href="{{route('materials.index')}}" class="btn btn-info">List</a>
                             </form>
                         </div>
                     </div>
