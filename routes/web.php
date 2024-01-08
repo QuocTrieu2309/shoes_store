@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Color\ColorController;
+use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Size\SizeController;
 use App\Models\Role;
@@ -48,5 +49,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit/{id}', [ColorController::class, 'edit'])->name('colors.edit');
         Route::put('/update/{id}', [ColorController::class, 'update'])->name('colors.update');
         Route::delete('/delete/{id}', [ColorController::class, 'destroy'])->name('colors.destroy');
+    });
+    Route::group(['prefix' => 'material'], function () {
+        Route::get('/', [MaterialController::class, 'index'])->name('materials.index');
+        Route::get('/create', [MaterialController::class, 'create'])->name('materials.create');
+        Route::post('/store', [MaterialController::class, 'store'])->name('materials.store');
+        Route::get('/edit/{id}', [MaterialController::class, 'edit'])->name('materials.edit');
+        Route::put('/update/{id}', [MaterialController::class, 'update'])->name('materials.update');
+        Route::delete('/delete/{id}', [MaterialController::class, 'destroy'])->name('materials.destroy');
     });
 });

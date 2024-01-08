@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Color;
+namespace App\Http\Controllers\Material;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Color;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Material;
 
-class ColorController extends Controller
+class MaterialController extends Controller
 {
-    const PATH_VIEW = "admins.colors.";
+    const PATH_VIEW = "admins.materials.";
     public function index()
     {
-        $title = "Colors";
-        $data = Color::where('deleted',0)->get();
+        $title = "Materials";
+        $data = Material::where('deleted',0)->get();
         return view(self::PATH_VIEW . __FUNCTION__, compact(['data', 'title']));
     }
     public function create()
     {
-        $title = "Create Color";
+        $title = "Create Material";
         return view(self::PATH_VIEW . __FUNCTION__, compact('title'));
     }
     public function store(Request $request)
@@ -26,11 +26,11 @@ class ColorController extends Controller
         $data = $request->all();
         $validator = Validator::make(
             $data,
-            ['name' => 'required|unique:colors|regex:/[a-zA-Z]/'],
+            ['name' => 'required|unique:materials|regex:/[a-zA-Z]/'],
             [
-                'name.required' => 'Không được để trống Colorname',
-                'name.unique' => 'Colorname đã tồn tại',
-                'name.regex' => 'Colorname phải là chữ',
+                'name.required' => 'Không được để trống Materialname',
+                'name.unique' => 'Materialname đã tồn tại',
+                'name.regex' => 'Materialname phải là chữ',
             ]
         );
         if ($validator->fails()) {
@@ -39,13 +39,13 @@ class ColorController extends Controller
                 ->withInput()
                 ->with('error', 'Thêm mới thất bại. Vui lòng kiểm tra lại thông tin.');
         }
-        Color::query()->create($data);
+        Material::query()->create($data);
         return back()->with('msg', 'Thêm mới thành công!');
     }
     public function edit($id)
     {
-        $title = "Edit Color";
-        $data = Color::find($id);
+        $title = "Edit Material";
+        $data = Material::find($id);
         return view(self::PATH_VIEW . __FUNCTION__, compact(['data', 'title']));
     }
     public function update(Request $request, $id)
@@ -53,11 +53,11 @@ class ColorController extends Controller
         $data = $request->all();
         $validator = Validator::make(
             $data,
-            ['name' => 'required|regex:/[a-zA-Z]/|unique:colors,name,'. $id],
+            ['name' => 'required|regex:/[a-zA-Z]/|unique:materials,name,'. $id],
             [
-                'name.required' => 'Không được để trống Colorname',
-                'name.unique' => 'Colorname đã tồn tại',
-                'name.regex' => 'Colorname phải là chữ',
+                'name.required' => 'Không được để trống Materialname',
+                'name.unique' => 'Materialname đã tồn tại',
+                'name.regex' => 'Materialname phải là chữ',
             ]
         );
         if ($validator->fails()) {
@@ -66,10 +66,10 @@ class ColorController extends Controller
                 ->withInput()
                 ->with('error', 'Thêm mới thất bại. Vui lòng kiểm tra lại thông tin.');
         }
-        $color = Color::find($id);
+        $material = Material::find($id);
 
-        if ($color) {
-            $color->update($data);
+        if ($material) {
+            $material->update($data);
             return back()->with('msg', 'Cập nhật thành công!');
         } else {
             return back()->with('error', 'Không tìm thấy bản ghi cần cập nhật.');
@@ -77,10 +77,10 @@ class ColorController extends Controller
     }
     public function destroy($id)
     {
-        $color = Color::find($id);
-        if ($color) {
-            $color->deleted = Color::STATUS_DEL;
-            $color->save();
+        $material = Material::find($id);
+        if ($material) {
+            $material->deleted = Material::STATUS_DEL;
+            $material->save();
             return back()->with('msg', 'Xóa thành công!');
         } else {
             return back()->with('error', 'Không tìm thấy bản ghi cần xóa.');
