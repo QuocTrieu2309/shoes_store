@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Color\ColorController;
 use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Role\RoleController;
@@ -57,5 +58,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit/{id}', [MaterialController::class, 'edit'])->name('materials.edit');
         Route::put('/update/{id}', [MaterialController::class, 'update'])->name('materials.update');
         Route::delete('/delete/{id}', [MaterialController::class, 'destroy'])->name('materials.destroy');
+    });
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::put('/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     });
 });
