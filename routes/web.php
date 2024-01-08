@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Color\ColorController;
 use App\Http\Controllers\Material\MaterialController;
@@ -67,4 +68,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::put('/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     });
+    Route::group(['prefix' => 'brand'], function () {
+        Route::get('/', [BrandController::class, 'index'])->name('brands.index');
+        Route::get('/create', [BrandController::class, 'create'])->name('brands.create');
+        Route::post('/store', [BrandController::class, 'store'])->name('brands.store');
+        Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
+        Route::put('/update/{id}', [BrandController::class, 'update'])->name('brands.update');
+        Route::delete('/delete/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
+    });
+
 });
