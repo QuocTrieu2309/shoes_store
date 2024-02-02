@@ -4,6 +4,8 @@ use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Color\ColorController;
 use App\Http\Controllers\Material\MaterialController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\ProductDetail\ProductDetailController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Size\SizeController;
 use App\Models\Role;
@@ -75,6 +77,27 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brands.edit');
         Route::put('/update/{id}', [BrandController::class, 'update'])->name('brands.update');
         Route::delete('/delete/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
+    });
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('/', [ProductController::class, 'index'])->name('products.index');
+        Route::get('/create', [ProductController::class, 'create'])->name('products.create');
+        Route::get('/{id}', [ProductController::class, 'show'])->name('products.show');
+        Route::post('/store', [ProductController::class, 'store'])->name('products.store');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update');
+        Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+    });
+    Route::group(['prefix' => 'product_detail'], function () {
+        Route::get('/', [ProductDetailController::class, 'index'])->name('product_details.index');
+        Route::get('/product/{id}/create', [ProductDetailController::class, 'create'])->name('product_details.create');
+        Route::get('/setting', [ProductDetailController::class, 'setting'])->name('product_details.setting');
+        Route::post('/create', [ProductDetailController::class, 'postCreate'])->name('product_details.postCreate');
+        Route::post('/delete-session', [ProductDetailController::class, 'deleteSession'])->name('product_details.postRemove');
+        Route::get('/{id}', [ProductDetailController::class, 'show'])->name('product_details.show');
+        Route::post('/store', [ProductDetailController::class, 'store'])->name('product_details.store');
+        Route::get('/edit/{id}', [ProductDetailController::class, 'edit'])->name('product_details.edit');
+        Route::put('/update/{id}', [ProductDetailController::class, 'update'])->name('product_details.update');
+        Route::delete('/delete/{id}', [ProductDetailController::class, 'destroy'])->name('product_details.destroy');
     });
 
 });

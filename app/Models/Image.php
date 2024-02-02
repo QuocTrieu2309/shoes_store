@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Image extends Model
 {
     use HasFactory;
     const STATUS_NOT_DEL = 0;
     const STATUS_DEL = 1;
-    protected $table = 'categories';
+    protected $table = 'images';
     protected $fillable = [
-        'name',
+        'product_detail_id',
+        'url',
         'deleted'
     ];
     public static function boot(){
         parent::boot();
-        static::creating(function ($category){
-         $category->deleted = self::STATUS_NOT_DEL;
+        static::creating(function ($image){
+         $image->deleted = self::STATUS_NOT_DEL;
         });
     }
-    public function productDetails(){
-        return $this->hasMany(ProductDetail::class);
+    public function productDetail(){
+        return $this->hasOne(ProductDetail::class);
     }
 }
