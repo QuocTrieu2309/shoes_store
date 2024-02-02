@@ -10,15 +10,17 @@ use Illuminate\Support\Facades\Validator;
 class RoleController extends Controller
 {
     const PATH_VIEW = 'admins.roles.';
-    public function index(){
-      $data = Role::all();
-      $title = "Roles";
-      return view(self::PATH_VIEW.__FUNCTION__,compact(['data','title']));
+    public function index()
+    {
+        $data = Role::all();
+        $title = "Roles";
+        return view(self::PATH_VIEW . __FUNCTION__, compact(['data', 'title']));
     }
 
-    public function create(){
-        $title= "Create Role";
-        return view(self::PATH_VIEW.__FUNCTION__,compact('title'));
+    public function create()
+    {
+        $title = "Create Role";
+        return view(self::PATH_VIEW . __FUNCTION__, compact('title'));
     }
     public function toggleStatus(Request $request)
     {
@@ -28,19 +30,20 @@ class RoleController extends Controller
             if ($role) {
                 $role->status = ($role->status == Role::STATUS_ACTIVE) ? Role::STATUS_INACTIVE : Role::STATUS_ACTIVE;
                 $role->save();
-    
+
                 return response()->json(['status' => 'success', 'new_status' => $role->status]);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->all();
         $validator =  Validator::make(
-          $data,
-          ['name'=>'required'],
-          ['name.required'=>'Không được để trống tên Role.']
+            $data,
+            ['name' => 'required'],
+            ['name.required' => 'Không được để trống tên Role.']
         );
         if ($validator->fails()) {
             return back()

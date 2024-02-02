@@ -21,4 +21,7 @@ class Color extends Model
          $color->deleted = self::STATUS_NOT_DEL;
         });
     }
+    public function productDetails(){
+        return $this->hasMany(ProductDetail::class);
+    }
 }

@@ -22,4 +22,7 @@ class Material extends Model
          $material->deleted = self::STATUS_NOT_DEL;
         });
     }
+    public function productDetails(){
+        return $this->hasMany(ProductDetail::class);
+    }
 }
