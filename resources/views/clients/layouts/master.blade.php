@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{asset('porto_ecommerce/assets/css/demo9.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('porto_ecommerce/assets/vendor/fontawesome-free/css/all.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('porto_ecommerce/assets/vendor/simple-line-icons/css/simple-line-icons.min.css')}}">
+    @yield('css')
 </head>
 
 <body class="boxed">

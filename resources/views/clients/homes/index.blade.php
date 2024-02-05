@@ -80,11 +80,12 @@
                         }
                     }
                 }">
+                @foreach ($data as $item)
+                    
                 <div class="product-default left-details">
                     <figure>
-                        <a href="demo9-product.html">
-                            <img src="porto_ecommerce/assets/images/demoes/demo9/products/product-1.jpg" alt="product" width="300" height="300">
-                            <img src="porto_ecommerce/assets/images/demoes/demo9/products/product-1-hover.jpg" alt="product" width="300" height="300">
+                        <a href="{{route('detailProduct',$item->id)}}">
+                            <img src="{{ asset('storage/images/' . ($item->productDetails)[0]->image->url) }}" alt="product" width="300" height="300">
                         </a>
                         <div class="label-group">
                             <span class="product-label label-hot">HOT</span>
@@ -92,10 +93,8 @@
                     </figure>
                     <div class="product-details">
                         <div class="category-list">
-                            <a href="demo9-shop.html" class="product-category">clothing</a>,
-                            <a href="demo9-shop.html" class="product-category">shoes</a>
                         </div>
-                        <h3 class="product-title"> <a href="demo9-product.html">Product Black Bag</a> </h3>
+                        <h3 class="product-title"> <a href="demo9-product.html">{{$item->name}}</a> </h3>
                         <div class="ratings-container">
                             <div class="product-ratings">
                                 <span class="ratings" style="width:0%"></span>
@@ -106,22 +105,30 @@
                         </div>
                         <!-- End .product-container -->
                         <div class="price-box">
-                            <span class="product-price">$99.00 – $109.00</span>
+                            @if ($item->min_price ==$item->max_price)
+                                <span class="product-price">{{$item->min_price}}đ</span>   
+                            @else
+                                <span class="product-price">{{$item->min_price}}đ – {{$item->max_price}}đ</span>
+                            @endif
                         </div>
                         <!-- End .price-box -->
                         <div class="product-action">
+                            @if ($item->min_price ==$item->max_price)
                             <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
-                                    class="icon-shopping-cart"></i><span>ADD TO CART</span></a>
+                                class="icon-shopping-cart"></i><span>ADD TO CART</span></a>   
+                            @else
+                            <a href="{{route('detailProduct',$item->id)}}" class="btn-icon btn-add-cart"><i
+                                class="fa fa-arrow-right"></i><span>SELECT
+                                OPTIONS</span></a>
+                            @endif
                             <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i
                                     class="icon-heart"></i></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
                         </div>
                     </div>
                     <!-- End .product-details -->
                 </div>
-
-                <div class="product-default left-details">
+                @endforeach
+                {{-- <div class="product-default left-details">
                     <figure>
                         <a href="demo9-product.html">
                             <img src="porto_ecommerce/assets/images/demoes/demo9/products/product-2.jpg" alt="product" width="300" height="300">
@@ -244,12 +251,12 @@
                         </div>
                     </div>
                     <!-- End .product-details -->
-                </div>
+                </div> --}}
             </div>
         </section>
 
 
-        <div class="home-products-container text-center">
+        {{-- <div class="home-products-container text-center">
             <div class="row">
                 <div class="col-md-6 mb-2 appear-animate" data-animation-delay="200" data-animation-name="fadeIn">
                     <div class="home-products bg-gray p-y-5">
@@ -496,13 +503,13 @@
                 <!-- End .col-md-4 -->
             </div>
             <!-- End .row -->
-        </div>
+        </div> --}}
         <!-- End .row.home-products -->
 
         <div class="mb-3"></div>
         <!-- margin -->
 
-        <section class="fashion-products-section pb-2 appear-animate" data-animation-delay="100" data-animation-duration="1500">
+        {{-- <section class="fashion-products-section pb-2 appear-animate" data-animation-delay="100" data-animation-duration="1500">
             <h2 class="section-title title-decorate text-center d-flex align-items-center">FASHION SELECTION
             </h2>
             <div class="owl-carousel owl-theme nav-image-center" data-owl-options="{
@@ -687,11 +694,11 @@
                     <!-- End .product-details -->
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <div class="m-b-1"></div>
         <!-- margin -->
-        <div class="banner newsletter-banner bg-img appear-animate" style="background-image: url(porto_ecommerce/assets/images/demoes/demo9/banners/banner.jpg)">
+        {{-- <div class="banner newsletter-banner bg-img appear-animate" style="background-image: url(porto_ecommerce/assets/images/demoes/demo9/banners/banner.jpg)">
             <div class="banner-content col-md-9 col-xl-6 col-lg-8 col-11 p-l-5 pr-0">
                 <h2 class="text-center ls-n-20 m-b-2 text-uppercase">subscribe to our newsletter</h2>
                 <h5 class="text-center text-body font-weight-normal m-b-3 p-x-4">Get all the latest information on events, sales and offers. Sign up for newsletter:</h5>
@@ -702,9 +709,9 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="brands-section appear-animate p-y-5">
+        {{-- <div class="brands-section appear-animate p-y-5">
             <div class="container">
                 <div class="brands-slider images-center owl-carousel owl-theme nav-pos-outside show-nav-hover appear-animate" data-owl-options="{
                         'margin': 0,
@@ -721,7 +728,7 @@
                 <!-- End .partners-carousel -->
             </div>
             <!-- End .container -->
-        </div>
+        </div> --}}
     </div>
     <!-- End .container -->
   </main>

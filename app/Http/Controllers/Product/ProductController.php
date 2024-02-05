@@ -20,13 +20,14 @@ class ProductController extends Controller
     const PATH_VIEW = 'admins.products.';
     public function index()
     {
-        if(session()->has('productDetails')){
+        if(session()->has('productDetails.image')){
             $lastProduct = Product::latest()->first();
             $lastProductID  = $lastProduct->id;
             $productDetail = ProductDetail::find($lastProductID);
             if(!$productDetail){
                 $lastProduct->delete();
             }
+            session()->forget('productDetails');
         }
         $title = "Create Product";
         $data = Product::with(['productDetails.image','productDetails.brand','productDetails.category','productDetails.material','productDetails.size','productDetails.color'])

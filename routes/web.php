@@ -3,6 +3,8 @@
 use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Color\ColorController;
+use App\Http\Controllers\DetailProduct\DetailProductController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Material\MaterialController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ProductDetail\ProductDetailController;
@@ -23,9 +25,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'shoes-store'], function () {
-    Route::get('/home', function () {
-        return view('clients.home');
-    })->name('home');
+    Route::get('/home',[HomeController::class ,'index']
+    )->name('home');
+    Route::get('/product/{id}',[DetailProductController::class ,'index']
+    )->name('detailProduct');
+    Route::get('/price',[DetailProductController::class ,'getPrice']
+    )->name('price');
+    Route::post('/add-cart',[DetailProductController::class ,'addCart']
+    )->name('add-cart');
 });
 
 Route::group(['prefix' => 'admin'], function () {
