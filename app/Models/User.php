@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable
 {
@@ -17,13 +18,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    const STATUS_NOT_DEL = 0;
+    const STATUS_DEL = 1;
     protected $fillable = [
         'name',
         'email',
         'password',
         'role_id',
         'avarta',
-        'deleted'
+        'deleted',
+        'address',
+        'phone'
     ];
 
     /**
@@ -45,4 +50,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function cart(){
+        return $this->hasOne(Cart::class);
+    }
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+    public static function boot(){
+        parent::boot();
+        static::creating(function ($user){
+         $user->deleted = self::STATUS_NOT_DEL;
+        });
+    }
 }

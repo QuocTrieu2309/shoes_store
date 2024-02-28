@@ -56,20 +56,36 @@ class DetailProductController extends Controller
     {
         $createdDate = now();
         $createdDate = $createdDate->toDateString();
-        $userID = 3;
+        $userID = session('user')->id;
         $cart = Cart::where('user_id',$userID)->first();
         if ($cart) {
             $cart_id = $cart->id;
-            $cart_detail = CartDetail::where('cart_id', $cart_id)
-                ->where('product_detail_id', $request->product_detail_id)->first();
-            if ($cart_detail) {
-                $cart_detail->increment('quantity', $request->quantity);
+            if(isset($request->product_id)){
+                $productDetail  = ProductDetail::where('product_id',$request->product_id)->first();
+                $cart_detail = CartDetail::where('cart_id', $cart_id)
+                ->where('product_detail_id', $productDetail->id)->first();
+                if ($cart_detail) {
+                    $cart_detail->increment('quantity', $request->quantity);
+                }else{
+                    $cart_detail =  CartDetail::query()->create([
+                        'cart_id' => $cart_id,
+                        'product_detail_id' => $productDetail->id,
+                        'quantity'=> $request->quantity
+                    ]);
+                }
+
             }else{
-                $cart_detail =  CartDetail::query()->create([
-                    'cart_id' => $cart_id,
-                    'product_detail_id' => $request->product_detail_id,
-                    'quantity'=> $request->quantity
-                ]);
+                $cart_detail = CartDetail::where('cart_id', $cart_id)
+                    ->where('product_detail_id', $request->product_detail_id)->first();
+                if ($cart_detail) {
+                    $cart_detail->increment('quantity', $request->quantity);
+                }else{
+                    $cart_detail =  CartDetail::query()->create([
+                        'cart_id' => $cart_id,
+                        'product_detail_id' => $request->product_detail_id,
+                        'quantity'=> $request->quantity
+                    ]);
+                }
             }
             return response()->json([
                 'status' => $cart_detail ? 'success' : 'error',
@@ -82,11 +98,20 @@ class DetailProductController extends Controller
             ]);
             if ($cart) {
                 $cart_id = $cart->id;
-                $cart_detail =  CartDetail::query()->create([
-                    'cart_id' => $cart_id,
-                    'product_detail_id' => $request->product_detail_id,
-                    'quantity'=> $request->quantity
-                ]);
+                if(isset($request->product_id)){
+                    $productDetail  = ProductDetail::where('product_id',$request->product_id)->first();
+                    $cart_detail =  CartDetail::query()->create([
+                        'cart_id' => $cart_id,
+                        'product_detail_id' => $productDetail->id,
+                        'quantity'=> $request->quantity
+                    ]);
+                }else{
+                    $cart_detail =  CartDetail::query()->create([
+                        'cart_id' => $cart_id,
+                        'product_detail_id' => $request->product_detail_id,
+                        'quantity'=> $request->quantity
+                    ]);
+                }
                 return response()->json([
                             'status' => !$cart_detail ? 'success' : 'error',
                              'data' => $cart_detail ?? null,

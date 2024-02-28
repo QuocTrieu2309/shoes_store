@@ -1,6 +1,7 @@
 <?php
-
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Brand\BrandController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Color\ColorController;
 use App\Http\Controllers\DetailProduct\DetailProductController;
@@ -10,6 +11,9 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ProductDetail\ProductDetailController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Size\SizeController;
+use App\Http\Controllers\Voucher\VoucherController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'shoes-store'], function () {
-    Route::get('/home',[HomeController::class ,'index']
+    Route::get('/',[HomeController::class ,'index']
     )->name('home');
     Route::get('/product/{id}',[DetailProductController::class ,'index']
     )->name('detailProduct');
@@ -33,6 +37,27 @@ Route::group(['prefix' => 'shoes-store'], function () {
     )->name('price');
     Route::post('/add-cart',[DetailProductController::class ,'addCart']
     )->name('add-cart');
+    Route::get('/cart',[CartController::class ,'index']
+    )->name('cart');
+    Route::put('/cart-update',[CartController::class ,'update']
+    )->name('cart-update');
+    Route::delete('/cart-update',[CartController::class ,'destroy']
+    )->name('cart-destroy');
+    Route::get('/checkout',[CartController::class ,'checkout']  
+    )->name('checkout');
+    Route::group(['prefix'=>'account'], function (){
+         Route::get('/login',[AuthController::class,'login'])->name('login');
+         Route::post('/check-login',[AuthController::class,'checkLogin'])->name('check-login');
+         Route::get('/register',[AuthController::class,'register'])->name('register');
+         Route::post('/check-register',[AuthController::class,'checkRegister'])->name('check-register');
+         Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+         Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+         Route::get('password/reset/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+         Route::post('password/reset', [ForgotPasswordController::class, 'reset'])->name('password.update');         
+    });
+    Route::post('/payment/vnpay', [PaymentController::class, 'redirectToVnPay'])->name('payment.request');
+    Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+    Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -105,6 +130,16 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit/{id}', [ProductDetailController::class, 'edit'])->name('product_details.edit');
         Route::put('/update/{id}', [ProductDetailController::class, 'update'])->name('product_details.update');
         Route::delete('/delete/{id}', [ProductDetailController::class, 'destroy'])->name('product_details.destroy');
+    });
+    Route::group(['prefix' => 'voucher'], function () {
+        Route::get('/', [VoucherController::class, 'index'])->name('vouchers.index');
+        Route::get('/create', [VoucherController::class, 'create'])->name('vouchers.create');
+        Route::get('/check', [VoucherController::class, 'check'])->name('vouchers.check');
+        Route::get('/{id}', [VoucherController::class, 'show'])->name('vouchers.show');
+        Route::post('/store', [VoucherController::class, 'store'])->name('vouchers.store');
+        Route::get('/edit/{id}', [VoucherController::class, 'edit'])->name('vouchers.edit');
+        Route::put('/update/{id}', [VoucherController::class, 'update'])->name('vouchers.update');
+        Route::delete('/delete/{id}', [VoucherController::class, 'destroy'])->name('vouchers.destroy');
     });
 
 });

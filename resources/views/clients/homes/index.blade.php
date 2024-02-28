@@ -114,7 +114,7 @@
                         <!-- End .price-box -->
                         <div class="product-action">
                             @if ($item->min_price ==$item->max_price)
-                            <a href="#" class="btn-icon btn-add-cart product-type-simple"><i
+                            <a href="#" class="btn-icon btn-add-cart product-type-simple" data-id="{{$item->id}}"><i
                                 class="icon-shopping-cart"></i><span>ADD TO CART</span></a>   
                             @else
                             <a href="{{route('detailProduct',$item->id)}}" class="btn-icon btn-add-cart"><i
@@ -732,4 +732,28 @@
     </div>
     <!-- End .container -->
   </main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.btn-add-cart').on('click',function(){
+        var productID = $(this).data('id');
+        $.ajax({
+           type: 'POST',
+           url: '{{route('add-cart')}}',
+           data: {
+            '_token':'{{csrf_token()}}',
+            'product_id': productID,
+            'quantity': 1
+           },
+           success: function(data){
+                console.log(data.data);
+           },
+           error: function(){
+
+           }
+
+        });
+      });
+    });
+  </script>
 @endsection
