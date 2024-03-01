@@ -112,7 +112,7 @@ class VoucherController extends Controller
         $start_time = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('start_time'))->format('Y-m-d H:i:s');
         $end_time = Carbon::createFromFormat('Y-m-d\TH:i', $request->input('end_time'))->format('Y-m-d H:i:s');
         $voucher = Voucher::find($id);
-        $voucher->update([
+        $check= $voucher->update([
             'name'=> $request->name,
             'start_time' => $start_time,
             'end_time'=> $end_time,
@@ -121,7 +121,7 @@ class VoucherController extends Controller
             'reduced_value'=> $request->reduced_value,
             'minimum_amount'=> $request->minimum_amount
         ]);
-        if(!$voucher){
+        if(!$check){
             return back()->with('error','Update voucher khong thanh cong!');
            }
            return back()->with('msg','Update voucher thanh cong!');
@@ -132,6 +132,7 @@ class VoucherController extends Controller
             $exists = UserVoucher::where('voucher_id', $voucher->id)->exists();
             if($exists){
                 $voucher->deleted = Voucher::STATUS_DEL;
+                $voucher->save();
             }else{
                 $voucher->delete();
             }
