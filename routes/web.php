@@ -15,6 +15,7 @@ use App\Http\Controllers\Voucher\VoucherController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Filter\FilterController;
 use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Promotion\PromotionController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
@@ -144,6 +145,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/edit/{id}', [VoucherController::class, 'edit'])->name('vouchers.edit');
         Route::put('/update/{id}', [VoucherController::class, 'update'])->name('vouchers.update');
         Route::delete('/delete/{id}', [VoucherController::class, 'destroy'])->name('vouchers.destroy');
+    });
+    Route::group(['prefix' => 'promotion'], function () {
+        Route::get('/', [PromotionController::class, 'index'])->name('promotions.index');
+        Route::get('/create', [PromotionController::class, 'create'])->name('promotions.create');
+        Route::get('/check', [PromotionController::class, 'check'])->name('promotions.check');
+        Route::post('/store', [PromotionController::class, 'store'])->name('promotions.store');
+        Route::get('/edit/{id}', [PromotionController::class, 'edit'])->name('promotions.edit');
+        Route::put('/update/{id}', [PromotionController::class, 'update'])->name('promotions.update');
+        Route::delete('/delete/{id}', [PromotionController::class, 'destroy'])->name('promotions.destroy');
     });
 
 });

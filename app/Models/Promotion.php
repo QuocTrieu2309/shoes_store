@@ -10,16 +10,23 @@ class Promotion extends Model
     use HasFactory;
     const STATUS_NOT_DEL = 0;
     const STATUS_DEL = 1;
+    const TYPE_PERCENT = 'Giảm theo phần trăm';
+    const TYPE_PRICE = 'Giảm theo đồng giá';
     protected $table = 'promotions';
     protected $fillable = [
         'name',
-        'status'
+        'type_promotion',
+        'start_time',
+        'end_time',
+        'value',
+        'description',
+        'deleted'
     ];
 
     public static function boot() {
         parent::boot();
         static::creating(function ($promotion){
-            $promotion->status = self::STATUS_NOT_DEL;
+            $promotion->deleted = self::STATUS_NOT_DEL;
         });
     }
 }
