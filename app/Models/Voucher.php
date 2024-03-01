@@ -30,6 +30,7 @@ class Voucher extends Model
         parent::boot();
         static::creating(function ($voucher){
          $voucher->deleted = self::STATUS_NOT_DEL;
+         $voucher->status = self::STATUS_ACTIVE;
         });
     }
     public function userVouchers(){

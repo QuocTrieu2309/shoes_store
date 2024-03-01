@@ -140,7 +140,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [VoucherController::class, 'index'])->name('vouchers.index');
         Route::get('/create', [VoucherController::class, 'create'])->name('vouchers.create');
         Route::get('/check', [VoucherController::class, 'check'])->name('vouchers.check');
-        Route::get('/{id}', [VoucherController::class, 'show'])->name('vouchers.show');
         Route::post('/store', [VoucherController::class, 'store'])->name('vouchers.store');
         Route::get('/edit/{id}', [VoucherController::class, 'edit'])->name('vouchers.edit');
         Route::put('/update/{id}', [VoucherController::class, 'update'])->name('vouchers.update');
