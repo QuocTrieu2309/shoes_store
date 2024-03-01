@@ -13,6 +13,7 @@ use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Size\SizeController;
 use App\Http\Controllers\Voucher\VoucherController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Filter\FilterController;
 use App\Http\Controllers\Payment\PaymentController;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +59,10 @@ Route::group(['prefix' => 'shoes-store'], function () {
     Route::post('/payment/vnpay', [PaymentController::class, 'redirectToVnPay'])->name('payment.request');
     Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
     Route::get('/payment/success', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+    Route::group(['prefix'=>'shop'],function (){
+         Route::get('/',[FilterController::class,'index'])->name('shop.index');
+         Route::get('/filter',[FilterController::class,'filter'])->name('shop.filter');
+    });
 });
 
 Route::group(['prefix' => 'admin'], function () {
